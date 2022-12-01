@@ -27,15 +27,6 @@ public class OriflameTest {
     }
 
     @Test
-    public void testRightNumber() {
-        String EXPECTED_CODE = "37769";
-        webDriver.get("https://by.oriflame.com/products/product?code=37769");
-        WebElement productCode = webDriver.findElement(By.xpath("//div[@class='color-code']//span[contains(@class,'code')]"));
-        Assert.assertEquals(productCode.getText(), EXPECTED_CODE);
-    }
-
-    
-    @Test
     public void testAddItemToCart() {
         webDriver.get("https://by.oriflame.com/products/product?code=37769");
         String EXPECTED_AMOUNT = "1";
@@ -51,7 +42,26 @@ public class OriflameTest {
         Assert.assertEquals(numberOfProduct.getAttribute("value"), EXPECTED_AMOUNT);
     }
 
+    @Test
+    public void testSearchProductByVendorCode(){
+        String EXPECTED_VENDOR_CODE = "37769";
+        webDriver.get("https://by.oriflame.com");
 
+        WebElement searchInput = webDriverWait
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[contains(@placeholder,'Поиск') or contains(@class,'top-area-sevu50')]")));
+        searchInput.click();
+        searchInput.sendKeys("37769");
+        searchInput.click();
+        searchInput.sendKeys(Keys.ENTER);
+
+        WebElement itemWithVendorCode = webDriverWait
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[contains(@href, '37769') and contains(@class,'product-box-1uxw1kc')]")));
+
+        String vendorCode = itemWithVendorCode.getAttribute("data-testid");
+
+        Assert.assertEquals(vendorCode, "Presentation-product-box-" + EXPECTED_VENDOR_CODE);
+
+    }
 
     @AfterMethod(alwaysRun = true)
     public void browserTearDown()  {
