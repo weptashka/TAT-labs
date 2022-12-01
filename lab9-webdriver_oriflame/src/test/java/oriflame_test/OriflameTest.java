@@ -31,13 +31,16 @@ public class OriflameTest {
         webDriver.get("https://by.oriflame.com/products/product?code=37769");
         String EXPECTED_AMOUNT = "1";
 
-        WebElement buttonAddToCart = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[contains(@class,'k-button add-to-basket be-by')]")));
+        WebElement buttonAddToCart = webDriverWait
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[contains(@class,'k-button add-to-basket be-by')]")));
         buttonAddToCart.click();
 
-        WebElement cartIcon = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@class='MuiTypography-root MuiTypography-body1 MuiLink-root MuiLink-underlineAlways top-area-4v5mp']")));
+        WebElement cartIcon = webDriverWait
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@class='MuiTypography-root MuiTypography-body1 MuiLink-root MuiLink-underlineAlways top-area-4v5mp']")));
         cartIcon.click();
 
-        WebElement numberOfProduct = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@data-testid='Checkout-shopping-bag-step-1-products-item-37769-P-quantity']")));
+        WebElement numberOfProduct = webDriverWait
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@data-testid='Checkout-shopping-bag-step-1-products-item-37769-P-quantity']")));
 
         Assert.assertEquals(numberOfProduct.getAttribute("value"), EXPECTED_AMOUNT);
     }
@@ -60,7 +63,6 @@ public class OriflameTest {
         String vendorCode = itemWithVendorCode.getAttribute("data-testid");
 
         Assert.assertEquals(vendorCode, "Presentation-product-box-" + EXPECTED_VENDOR_CODE);
-
     }
 
     @AfterMethod(alwaysRun = true)
